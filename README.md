@@ -5,7 +5,15 @@ public IP address of the machine it is running on.
 
 ## Getting started
 
+### Using binary from releases
+
+You can download this script in a binary format from the [releases page](https://github.com/alber70g/cf-dns-updater/releases). It's compiled using [Buns Single File Executable](#single-file-executable)
+
+### Using a javascript runtime
+
 [Install `bun`.](https://bun.sh/docs/installation)
+
+> Note: you can also use nodejs or deno to run this script.
 
 Run this script with `bun`.
 
