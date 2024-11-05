@@ -1,5 +1,5 @@
-import { readFileSync, writeFileSync } from "fs";
-import readline from "readline";
+import { readFileSync, writeFileSync } from "node:fs";
+import readline from "node:readline";
 
 // Load configuration
 interface Config {
@@ -13,8 +13,9 @@ const CONFIG_PATH = process.argv.includes("--config")
   ? process.argv[process.argv.indexOf("--config") + 1]
   : "./config.json";
 
-const loadConfig = (): Config => {
+const loadConfig = async (): Promise<Config> => {
   try {
+    // return await Bun.read(CONFIG_PATH).json();
     const data = readFileSync(CONFIG_PATH, "utf-8");
     return JSON.parse(data) as Config;
   } catch (error) {
@@ -23,16 +24,18 @@ const loadConfig = (): Config => {
   }
 };
 
-const saveConfig = (config: Config) => {
+const saveConfig = async (config: Config) => {
   try {
+    // await Bun.write(CONFIG_PATH, JSON.stringify(config, null, 2));
     writeFileSync(CONFIG_PATH, JSON.stringify(config, null, 2));
+
     console.log("Configuration saved successfully.");
   } catch (error) {
     console.error("Failed to save config file: " + error.message);
   }
 };
 
-const config = loadConfig();
+const config = await loadConfig();
 const rl = readline.createInterface({
   input: process.stdin,
   output: process.stdout,
@@ -59,10 +62,12 @@ const ensureConfigValues = async () => {
       console.log(`${index + 1}. ${domain}`);
     });
 
-    const selectedIndices = await prompt(
+    const selectedIndices = (await prompt(
       "Enter the numbers of the domains to manage (comma-separated): "
-    );
-    const indices = selectedIndices.split(",").map((num) => parseInt(num.trim()) - 1);
+    )) as string;
+    const indices = selectedIndices
+      .split(",")
+      .map((num) => parseInt(num.trim()) - 1);
 
     const selectedDomains = indices.map((index) => domainList[index]);
 
@@ -78,7 +83,9 @@ const ensureConfigValues = async () => {
     }
   });
 
-  saveConfig(config);
+  await saveConfig(config);
+
+  console.log("Configuration values are set successfully.");
 };
 
 const ZONE_URL = "https://api.cloudflare.com/client/v4/zones";
@@ -135,9 +142,9 @@ async function selectSubdomainsToUpdate(zoneId: string, domain: string) {
     console.log(`${index + 1}. ${subdomain}`);
   });
 
-  const selectedIndices = await prompt(
+  const selectedIndices = (await prompt(
     "Enter the numbers of the subdomains to update (comma-separated): "
-  );
+  )) as string;
   const indices = selectedIndices
     .split(",")
     .map((num) => parseInt(num.trim()) - 1);
@@ -151,7 +158,7 @@ async function selectSubdomainsToUpdate(zoneId: string, domain: string) {
     }
   }
 
-  saveConfig(config);
+  await saveConfig(config);
 
   console.log("Updated selected subdomains for domain:", domain);
 }

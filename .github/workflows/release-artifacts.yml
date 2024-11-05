@@ -1,0 +1,24 @@
+name: Release
+
+on:
+  push:
+    # tags:
+    #   - "v*.*.*"
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Setup bun
+        uses: oven-sh/setup-bun@v2
+        with:
+          bun-version: latest
+      - name: Create artifacts
+        run: bun ./build.ts
+      - name: Release artifacts
+        uses: softprops/action-gh-release@v2
+        # if: startsWith(github.ref, 'refs/tags/')
+        with:
+          files: ./bin/*
