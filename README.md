@@ -5,7 +5,7 @@ public IP address of the machine it is running on.
 
 ## Getting started
 
-[Install `bun`. ](https://bun.sh/docs/installation)
+[Install `bun`.](https://bun.sh/docs/installation)
 
 Run this script with `bun`.
 
