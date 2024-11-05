@@ -1,15 +1,22 @@
 # Cloudflare DNS Updater
 
-This is a simple script that updates a Cloudflare DNS record with the current
+This is a simple script that updates a Cloudflare DNS record with the current 
 public IP address of the machine it is running on.
 
 ## Getting started
 
 ### Using binary from releases
 
-You can download this script in a binary format from the [releases page](https://github.com/alber70g/cf-dns-updater/releases). It's compiled using [Buns Single File Executable](#single-file-executable)
+You can download this script in a binary format from the
+[releases page](https://github.com/alber70g/cf-dns-updater/releases). It's
+compiled using [Buns Single File Executable](#single-file-executable).
+See [Bun docs](https://bun.sh/docs/bundler/executables#cross-compile-to-other-platforms)
+for the differences between `modern` and `baseline` builds.
 
-### Using a javascript runtime
+> - For CPUs from before 2013, use the `baseline` version (nehalem)
+> - For CPUs from 2013 and later, use the `modern` version (haswell)
+
+### Using a Javascript runtime
 
 [Install `bun`.](https://bun.sh/docs/installation)
 

@@ -7,9 +7,15 @@ console.log(bunVersion);
 // https://bun.sh/docs/bundler/executables#supported-targets
 const targets = [
   "bun-linux-x64",
+  "bun-linux-x64-baseline",
+  "bun-linux-x64-modern",
   "bun-linux-arm64",
   "bun-windows-x64",
+  "bun-windows-x64-baseline",
+  "bun-windows-x64-modern",
   "bun-darwin-x64",
+  "bun-darwin-x64-baseline",
+  "bun-darwin-x64-modern",
   "bun-darwin-arm64",
 ];
 
